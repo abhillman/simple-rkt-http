@@ -1,0 +1,17 @@
+Beginnings of a small http server written using TCP primitives in Racket.
+
+Usage:
+1. install nix https://nixos.org/download
+2. cd into this repository and run `nix-shell`
+3. run `racket simple-http.rkt`
+
+Alternatively, skip step (1) and use your preferred package
+manager (e.g. brew, apt-get, etc.).
+
+One can test the server by running `telnet localhost <port-no>` where
+the port number is reported by the server when run.
+
+Implementation information:
+* [Sep 17 '23] awaiting an arbitrary number of TCP connections is implemented
+* [TODO] implementation of HTTP/1.x is not yet completed
+
