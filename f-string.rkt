@@ -3,7 +3,12 @@
 (provide f-string/expr/p f-string/parse)
 
 (require megaparsack megaparsack/text)
-(require data/monad data/applicative)
+(require data/monad data/applicative data/functor)
+
+; (define f-string/text/p
+;   (do
+;     [text <- (many/p (char-not-in/p "{}"))]
+;     (pure (list->string text))))
 
 (define f-string/expr/p
   (do
@@ -16,15 +21,9 @@
 (define f-string/p
   (many/p
     (do [datum <- f-string/expr/p]
-      (pure datum))))
-
-(define (f-string/read text)
-  (read
-    (open-input-string
-      text)))
+      (map (lambda (v) (format "~v" v)) (pure datum)))))
 
 (define (f-string/parse text)
   (string-join
-    (map (λ (v) (format "~v" v))
-      (parse-result!
-        (parse-string f-string/p text))) ""))
+    (parse-result!
+      (parse-string f-string/p text)) ""))
